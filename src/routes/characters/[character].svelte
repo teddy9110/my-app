@@ -1,8 +1,7 @@
 <script context="module">
-	export async function load({ fetch }) {
-		const res = await fetch('https://rickandmortyapi.com/api/character');
+	export async function load({ params, fetch }) {
+		const res = await fetch('https://rickandmortyapi.com/api/character/'+params.character);
 		let chars = await res.json();
-		chars = chars.results;
 		return {
 			props: {
 				chars
@@ -12,9 +11,6 @@
 </script>
 
 <script lang="ts">
-	import { enhance } from '$lib/form';
-	import { scale } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
 	export let chars;
 </script>
 
@@ -25,17 +21,15 @@
 <div class="chars">
 	<h1>Characters</h1>
 	<div>
-		{#each chars as info}
 			<div class="middle">
-			<a href="/characters/{info.id}">
-				<div class="lineItem">{info.id}</div>
-				<div class="lineItem">{info.name}</div>
-				<div class="lineItem">{info.status}</div>
-				<div class="lineItem">{info.species}</div>
-				<div class="lineItem">{info.type}</div>
+			<a href="/character">
+				<div class="lineItem">{chars.id}</div>
+				<div class="lineItem">{chars.name}</div>
+				<div class="lineItem">{chars.status}</div>
+				<div class="lineItem">{chars.species}</div>
+				<div class="lineItem">{chars.type}</div>
 			</a>
 			</div>
-		{/each}
 	</div>
 </div>
 
